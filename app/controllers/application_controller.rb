@@ -12,10 +12,11 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) << :name
   end
 
-  def admin_user
-    unless current_user.admin?
-      flash[:danger] = "You don't have enough permissions"
+  #method shows message when user has no access to some action
+  #here we can also log it
+  def access_denied(exception)
+      flash[:danger] = exception.message
       redirect_to root_url
-    end
   end
+
 end
